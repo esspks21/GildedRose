@@ -22,60 +22,52 @@ GildedRose::GildedRose(vector<Item>& items) : items(items)
 {
 }
 
+void GildedRose::updateNormal(Item& item)
+{
+    decreaseQuality(item);
+    item.sellIn--;
+    if (item.sellIn < 0)
+        decreaseQuality(item);
+}
+
+void GildedRose::updateAgedBrie(Item& item)
+{
+    increaseQuality(item);
+    item.sellIn--;
+    if (item.sellIn < 0)
+        increaseQuality(item);
+}
+
+void GildedRose::updateSulfuras(Item& item)
+{
+}
+
+void GildedRose::updateBackstagePass(Item& item)
+{
+    increaseQuality(item);
+    if (item.sellIn < 11) increaseQuality(item);
+    if (item.sellIn < 6)  increaseQuality(item);
+    item.sellIn--;
+    if (item.sellIn < 0)
+        item.quality = MIN_QUALITY;
+}
+
+void GildedRose::updateConjured(Item& item)
+{
+    decreaseQuality(item);
+    item.sellIn--;
+    if (item.sellIn < 0)
+        decreaseQuality(item);
+}
+
 void GildedRose::updateQuality()
 {
-    for (int i = 0; i < items.size(); i++)
+    for (auto& item : items)
     {
-        if (items[i].name != AGED_BRIE && items[i].name != BACKSTAGE_PASS)
-        {
-            if (items[i].name != SULFURAS)
-            {
-                decreaseQuality(items[i]);
-            }
-        }
-        else
-        {
-            increaseQuality(items[i]);
-
-            if (items[i].name == BACKSTAGE_PASS)
-            {
-                if (items[i].sellIn < 11)
-                {
-                    increaseQuality(items[i]);
-                }
-
-                if (items[i].sellIn < 6)
-                {
-                    increaseQuality(items[i]);
-                }
-            }
-        }
-
-        if (items[i].name != SULFURAS)
-        {
-            items[i].sellIn = items[i].sellIn - 1;
-        }
-
-        if (items[i].sellIn < 0)
-        {
-            if (items[i].name != AGED_BRIE)
-            {
-                if (items[i].name != BACKSTAGE_PASS)
-                {
-                    if (items[i].name != SULFURAS)
-                    {
-                        decreaseQuality(items[i]);
-                    }
-                }
-                else
-                {
-                    items[i].quality = MIN_QUALITY;
-                }
-            }
-            else
-            {
-                increaseQuality(items[i]);
-            }
-        }
+        if      (item.name == SULFURAS)       updateSulfuras(item);
+        else if (item.name == AGED_BRIE)      updateAgedBrie(item);
+        else if (item.name == BACKSTAGE_PASS) updateBackstagePass(item);
+        else if (item.name == CONJURED)       updateConjured(item);
+        else                                  updateNormal(item);
     }
 }

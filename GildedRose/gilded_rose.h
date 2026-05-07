@@ -20,5 +20,12 @@ public:
     GildedRose(std::vector<Item>& items);
 
     void updateQuality();
+
+private:
+    void updateNormal(Item& item);
+    void updateAgedBrie(Item& item);
+    void updateSulfuras(Item& item);
+    void updateBackstagePass(Item& item);
+    void updateConjured(Item& item);
 };
 
