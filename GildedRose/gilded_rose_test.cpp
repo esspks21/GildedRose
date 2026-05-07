@@ -1,8 +1,27 @@
 #include "gmock/gmock.h"
 #include "gilded_rose.h"
+#include <sstream>
+#include <iostream>
 
 using std::vector;
 using std::string;
+
+void print_item(const Item& item);
+
+TEST(PrintItemTest, PrintsNameSellInQuality) {
+    //Arrange
+    Item item("Aged Brie", 5, 10);
+    std::streambuf* orig = std::cout.rdbuf();
+    std::ostringstream oss;
+    std::cout.rdbuf(oss.rdbuf());
+
+    //Act
+    print_item(item);
+
+    //Assert
+    std::cout.rdbuf(orig);
+    EXPECT_EQ("Aged Brie, 5, 10\n", oss.str());
+}
 
 TEST(GildedRoseTest, Foo) {
     //Arrange

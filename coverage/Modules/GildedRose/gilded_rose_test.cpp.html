@@ -11,9 +11,28 @@
         <pre class="prettyprint lang-cpp linenums">
 #include "gmock/gmock.h"
 #include "gilded_rose.h"
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
 
 using std::vector;
 using std::string;
+
+void print_item(const Item&amp; item);
+
+<span style = "background-color:#dfd">TEST(PrintItemTest, PrintsNameSellInQuality) {</span>
+    //Arrange
+<span style = "background-color:#dfd">    Item item("Aged Brie", 5, 10);
+    std::streambuf* orig = std::cout.rdbuf();
+    std::ostringstream oss;
+    std::cout.rdbuf(oss.rdbuf());</span>
+
+    //Act
+<span style = "background-color:#dfd">    print_item(item);</span>
+
+    //Assert
+<span style = "background-color:#dfd">    std::cout.rdbuf(orig);
+    EXPECT_EQ("Aged Brie, 5, 10\n", oss.str());
+}</span>
 
 <span style = "background-color:#dfd">TEST(GildedRoseTest, Foo) {</span>
     //Arrange
