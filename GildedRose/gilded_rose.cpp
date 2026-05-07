@@ -55,9 +55,13 @@ void GildedRose::updateBackstagePass(Item& item)
 void GildedRose::updateConjured(Item& item)
 {
     decreaseQuality(item);
+    decreaseQuality(item);
     item.sellIn--;
     if (item.sellIn < 0)
+    {
         decreaseQuality(item);
+        decreaseQuality(item);
+    }
 }
 
 void GildedRose::updateQuality()
