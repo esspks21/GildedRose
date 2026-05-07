@@ -10,6 +10,14 @@ static const string CONJURED       = "Conjured";
 static const int    MAX_QUALITY    = 50;
 static const int    MIN_QUALITY    = 0;
 
+static void increaseQuality(Item& item) {
+    if (item.quality < MAX_QUALITY) item.quality++;
+}
+
+static void decreaseQuality(Item& item) {
+    if (item.quality > MIN_QUALITY) item.quality--;
+}
+
 GildedRose::GildedRose(vector<Item>& items) : items(items)
 {
 }
@@ -20,37 +28,25 @@ void GildedRose::updateQuality()
     {
         if (items[i].name != AGED_BRIE && items[i].name != BACKSTAGE_PASS)
         {
-            if (items[i].quality > MIN_QUALITY)
+            if (items[i].name != SULFURAS)
             {
-                if (items[i].name != SULFURAS)
-                {
-                    items[i].quality = items[i].quality - 1;
-                }
+                decreaseQuality(items[i]);
             }
         }
         else
         {
-            if (items[i].quality < MAX_QUALITY)
+            increaseQuality(items[i]);
+
+            if (items[i].name == BACKSTAGE_PASS)
             {
-                items[i].quality = items[i].quality + 1;
-
-                if (items[i].name == BACKSTAGE_PASS)
+                if (items[i].sellIn < 11)
                 {
-                    if (items[i].sellIn < 11)
-                    {
-                        if (items[i].quality < MAX_QUALITY)
-                        {
-                            items[i].quality = items[i].quality + 1;
-                        }
-                    }
+                    increaseQuality(items[i]);
+                }
 
-                    if (items[i].sellIn < 6)
-                    {
-                        if (items[i].quality < MAX_QUALITY)
-                        {
-                            items[i].quality = items[i].quality + 1;
-                        }
-                    }
+                if (items[i].sellIn < 6)
+                {
+                    increaseQuality(items[i]);
                 }
             }
         }
@@ -66,25 +62,19 @@ void GildedRose::updateQuality()
             {
                 if (items[i].name != BACKSTAGE_PASS)
                 {
-                    if (items[i].quality > MIN_QUALITY)
+                    if (items[i].name != SULFURAS)
                     {
-                        if (items[i].name != SULFURAS)
-                        {
-                            items[i].quality = items[i].quality - 1;
-                        }
+                        decreaseQuality(items[i]);
                     }
                 }
                 else
                 {
-                    items[i].quality = items[i].quality - items[i].quality;
+                    items[i].quality = MIN_QUALITY;
                 }
             }
             else
             {
-                if (items[i].quality < MAX_QUALITY)
-                {
-                    items[i].quality = items[i].quality + 1;
-                }
+                increaseQuality(items[i]);
             }
         }
     }
