@@ -1,0 +1,9 @@
+.vs/
+x64/
+coverage/
+*.exe
+*.log
+*.db
+*.db-shm
+*.opendb
+*.vsidx
