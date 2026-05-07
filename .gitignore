@@ -1,6 +1,5 @@
 .vs/
 x64/
-coverage/
 *.exe
 *.log
 *.db
