@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="GildedRose/GildedRose.vcxproj" />
+  <Project Path="GildedRose/GildedRose.vcxproj" Id="9e3189bd-13ba-429f-88c5-537b7d8547be" />
 </Solution>
